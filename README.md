@@ -1,1 +1,4 @@
-# dorm-information-system
+# rental-dormitory
+
+
+Dormitory Information System.
