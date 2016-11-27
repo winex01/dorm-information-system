@@ -47,6 +47,9 @@ $phoneNum = $r['boarder_phoneNum'];
 		<button type="button" id="update<?php echo $id; ?>" onclick="updateData('<?php echo $id; ?>')" class="btn btn-warning btn-xs">update
 		<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 		</button>
+		<button type="button" id="delete<?php echo $id; ?>" onclick="deleteBoarder('<?php echo $id; ?>','<?php echo $name; ?>')" class="btn btn-danger btn-xs">Delete
+		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+		</button>
 	</td>
 </tr>
 

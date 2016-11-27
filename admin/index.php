@@ -2,7 +2,7 @@
  <div id="wrapper">
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
-    <ul class="sidebar-nav" style="margin-top: 50px;">
+    <ul class="sidebar-nav" style="margin-top: 20px;">
         <li >
             <a href="javascript:;">
             <strong>Dormitory Info System</strong>
@@ -383,41 +383,30 @@
                     }); 
             }//end ajax result == 12345
         });
-
-        
-        //display all boarders
-        showAllBoarders();//display data on the table
-        function showAllBoarders()
-        {
-            var html = '';
-            var i;
-            $.ajax({
-                    url: '../data/showAllBoarders.php',
-                    type: 'post',
-                    async: false,
-                    success: function (data) {
-                        // console.log(data);
-                        // alert(data);
-                        // console.log = function(){}
-                        $('#showData').html(data);
-                    },
-                    error: function(){
-                        alert('could not get data from db to table');
-                    }
-            });
-        }
-        //end display all boarders
-
-      
-
-
     });//end document ready
-      
-  //update data
-    function updateData(id)
+
+    //display all boarders
+    showAllBoarders();//display data on the table
+    function showAllBoarders()
     {
-        alert('this is update');
+        var html = '';
+        var i;
+        $.ajax({
+                url: '../data/showAllBoarders.php',
+                type: 'post',
+                async: false,
+                success: function (data) {
+                    // console.log(data);
+                    // alert(data);
+                    // console.log = function(){}
+                    $('#showData').html(data);
+                },
+                error: function(){
+                    alert('could not get data from db to table');
+                }
+        });
     }
+    //end display all boarders
 
     //view sms modal
     var smsID,phoneNum;
@@ -476,6 +465,39 @@
     });
     //end sms
 
+
+    //delete boarder
+    var delId;
+    function deleteBoarder(id, name)
+    {
+        this.delId = id;
+        $('#modal-delete').modal('show');
+        $('#modal-delete').find('#body-delete').text(name);
+    }
+    $('#deleteConfirm').click(function() {
+        $.ajax({
+                url: '../data/deleteBoarder.php',
+                type: 'post',
+                data: {id: delId},
+                success: function (data) {
+                    // alert(data);
+                    $('#msgModal').modal('show');
+                    $('#msgModal').find('#msgbody').text(data);
+                    showAllBoarders();
+                },
+                error: function(){
+                    alert('Error: data cannot delete student');
+                }
+            });
+    });
+    //end delete boarder/student/data
+
+
+      //update data
+    function updateData(id)
+    {
+        alert('this is update');
+    }//end update data
 </script>
 
 </body>

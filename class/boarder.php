@@ -21,6 +21,19 @@ class Boarder extends Database implements iBoarder {
 		}
 	}
 
+	public function deleteBoarder($id)
+	{
+		try {
+			$sql = 'DELETE FROM boarder 
+					WHERE boarder_id = ?
+			';
+			$this->deleteRow($sql, [$id]);
+			echo 'Student Deleted Successfully';
+		} catch (Exception $e) {
+			return new Exception($e->getMessage());
+		}			
+	}
+
 	public function showAllBoarders()
 	{
 		try {
