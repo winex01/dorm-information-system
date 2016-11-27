@@ -30,19 +30,21 @@ $name = ucwords("$fN $mN $lN");
 //date
 $due = strtotime($r['boarder_started']);
 $due = date('d', $due);
+$id = $r['boarder_id'];
+$phoneNum = $r['boarder_phoneNum'];
 ?>
 
 <tr>
 	<td><?php echo $name; ?></td>
 	<td><?php echo $r['boarder_homeAddress']; ?></td>
 	<td><?php echo $r['boarder_telephoneNum']; ?></td>
-	<td><?php echo $r['boarder_phoneNum']; ?></td>
+	<td><?php echo $phoneNum; ?></td>
 	<td align="center"><?php echo $due; ?></td>
 	<td>
-		<button type="button" class="btn btn-success btn-xs">sms
+		<button type="button" onclick="sms('<?php echo $id; ?>', '<?php echo $phoneNum; ?>')"	 class="btn btn-success btn-xs">sms
 		<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
 		</button>
-		<button type="button" class="btn btn-warning btn-xs">update
+		<button type="button" id="update<?php echo $id; ?>" onclick="updateData('<?php echo $id; ?>')" class="btn btn-warning btn-xs">update
 		<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
 		</button>
 	</td>

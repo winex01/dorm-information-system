@@ -1,14 +1,23 @@
 <?php require_once('header.php'); ?>
- <div id="wrapper">
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="javascript:;">
+            <div class="text-primary">
+                 <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Dormitory Information System
+            </div>
+        </a>
+		<ul class="nav navbar-right">
+		<li class="text-primary" style="margin-top: 14px; margin-right: 10px;">
+			<h4>Welcome <?php echo getUserName(); ?></h4>
+		</li>
+		</ul>
+	</div>
+</nav>
+ <div id="wrapper" style="margin-top: -20px;">
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
-    <ul class="sidebar-nav" style="margin-top: 50px;">
-        <li >
-            <a href="javascript:;">
-            <strong>Dormitory Info System</strong>
-            </a>
-        </li>
-        <li >
+    <ul class="sidebar-nav">
+        <li>
             <a href=""><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Dashboard</a>
         </li>
         <li>
@@ -32,19 +41,31 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle" style="margin-top: -10px;">
+                <a href="#menu-toggle" class="btn btn-primary" id="menu-toggle">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                 Menu</a>
-                <h2>Welcome to dashboard <?php echo getUserName(); ?></h2>
+                <br />
                 <!-- main content -->
-                <div style="margin-top: 10px; margin-bottom: 10px;">
+                <div style="margin-top: 20px;">
                     <button type="button" id="newData2" class="btn btn-default">New
                     <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
                     </button>
                 </div>
-                <div id="showData">
-                    <!-- table -->
-                </div>
+                <br />
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Home Address</th>
+                            <th>Telephone #</th>
+                            <th>Phone #</th>
+                            <th>Payment Due</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="showData">
+                    </tbody>
+                </table>
                 <!-- end main content -->
             </div>
         </div>
@@ -371,7 +392,7 @@
                             homeAddress : homeAddress.val()
                         },
                         success: function (data) {
-                            // console.log(data);
+                            console.log(data);
                             $('#msgModal').modal('show');
                             $('#msgModal').find('#msgbody').text(data);
                             $('#modal-boarder').modal('hide');
@@ -387,6 +408,7 @@
         
         //display all boarders
         showAllBoarders();//display data on the table
+        $('#example').DataTable();
         function showAllBoarders()
         {
             var html = '';
@@ -394,12 +416,25 @@
             $.ajax({
                     url: '../data/showAllBoarders.php',
                     type: 'post',
-                    async: false,
+                    dataType: 'json',
                     success: function (data) {
-                        // console.log(data);
-                        // alert(data);
-                        // console.log = function(){}
-                        $('#showData').html(data);
+                        // console.log = function() {}//trick the console
+                        console.log(data);
+                        // var data = JSON.parse(rdata);
+                        for(i = 0; i < data.length; i++){
+                            var name =  data[i].boarder_firstName+
+                                    ' '+data[i].boarder_middleName+
+                                    ' '+data[i].boarder_lastName;
+                            html += '<tr>'+
+                                        '<td>'+name+'</td>'+
+                                        '<td>'+data[i].boarder_homeAddress+'</td>'+
+                                        '<td>'+data[i].boarder_telephoneNum+'</td>'+
+                                        '<td>'+data[i].boarder_phoneNum+'</td>'+
+                                        '<td>'+data[i].boarder_started+'</td>'+
+                                        '<td></td>'+
+                                    '</tr>';
+                        }
+                        $('#showData').html(html);
                     },
                     error: function(){
                         alert('could not get data from db to table');
@@ -408,74 +443,8 @@
         }
         //end display all boarders
 
-      
-
-
     });//end document ready
-      
-  //update data
-    function updateData(id)
-    {
-        alert('this is update');
-    }
-
-    //view sms modal
-    var smsID,phoneNum;
-    function sms(id, phoneNum)
-    {
-        this.smsID = id;
-        this.phoneNum = phoneNum;
-        $('#modal-sms').modal('show'); 
-        $('#smsPhoneNum').val(phoneNum);
-    }
-
-    var smsMessage = $('textarea[id=smsMessage]');
-    $('#smsSend').click(function() {
-        // phoneNum
-        $('#smsMessage').focus();
-        var result = '';
-        if(smsMessage.val() == ''){
-            smsMessage.parent().addClass('has-error');
-            smsMessage.parent().parent().addClass('has-error');
-        }else if(smsMessage.val().length > 100){
-            $('#sM-err').text('You can only enter 100 characters.');
-        }else{
-            result += '1';
-            smsMessage.parent().removeClass('has-error');
-            smsMessage.parent().parent().removeClass('has-error');
-            $('#sM-err').text('');
-        }
-        if(result == '1'){
-            $('#msgModal').modal('show');
-            $.ajax({
-                    url: '../data/sendsms.php',
-                    type: 'post',
-                    dataType: 'json',
-                    data: {phoneNum : phoneNum, smsMessage : smsMessage.val()},
-                    success: function (data) {
-                        if(data.message == 'ACCEPTED'){
-                            $('#msgModal').find('#msgbody').text('Message Send Successfully');
-                        }else{
-                            $('#msgModal').find('#msgbody').text('Invalid Mobile Number');
-                        }
-                    },
-                    error: function(){
-                        alert('error ajax sending sms');
-                    }
-                });
-            $('#modal-sms').modal('hide');
-        }//end result == 1
-    });//end $smsSend
-
-    //clear sms modal when close
-     $('#modal-sms').on('hidden.bs.modal', function () {
-            $(this).find('form').trigger('reset');
-             smsMessage.parent().removeClass('has-error');
-             smsMessage.parent().parent().removeClass('has-error');
-            $('#smsMessage').focus();
-    });
-    //end sms
-
+    
 </script>
 
 </body>
