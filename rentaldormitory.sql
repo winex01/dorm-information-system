@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2016 at 09:43 PM
+-- Generation Time: Nov 28, 2016 at 08:20 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -42,18 +42,8 @@ CREATE TABLE `boarder` (
 --
 
 INSERT INTO `boarder` (`boarder_id`, `boarder_firstName`, `boarder_middleName`, `boarder_lastName`, `boarder_homeAddress`, `boarder_telephoneNum`, `boarder_phoneNum`, `boarder_started`) VALUES
-(1, 'winnie', 'alterado', 'damayo', 'crossing suba villaba leyte', '', '0987654321', '2016-11-25'),
-(2, 'reyvelyn', 'viovicente', 'damayo', 'from the land of beauty', '', '099232323', '2016-11-26'),
-(3, 'john', 'a', 'dough', 'missing in action', '', '1231323', '2016-11-26'),
-(4, 'firstname', 'middlename', 'lastname', 'the address is the address', '123123', '09090909', '2016-11-26'),
-(5, 'jane', 'something', 'dough', 'missing in actiong city', '', '05222323', '2016-11-26'),
-(6, 'johny', 'dough', 'bravo', 'cartoon networks hehhehe', '1323123', '1312312312', '2016-11-26'),
-(7, '123', '123', '123', '123', '123', '123', '2016-11-26'),
-(8, 'admin', 'admin', 'admin', 'this is beyond recognition island', '234234', '23423', '2016-11-26'),
-(9, 'natsu', 'zeref', 'dragneel', 'idolas magnolia city', '34234', '0909090909', '2016-11-26'),
-(10, 'lucy', 'wtf', 'heartfellia', 'magnolia city', '', '222', '2016-11-26'),
-(11, 'erza', 'w', 'scarlet', 'fairy tail world', '', '232323', '2016-11-26'),
-(12, 'luffy', 'd', 'monkey', 'east blue', '', '1212312321', '2016-11-26');
+(1, 'winnie', 'alterado', 'damayo', 'crossing suba villaba leyte', '552 5592', '09208783268', '2016-11-27'),
+(2, 'reyvelyn', 'ybañez', 'viovicente', 'caridad bay-bay leyte', '032-410-6280', '09994238361', '2016-11-27');
 
 -- --------------------------------------------------------
 
@@ -103,7 +93,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `boarder`
 --
 ALTER TABLE `boarder`
-  MODIFY `boarder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `boarder_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `user`
 --

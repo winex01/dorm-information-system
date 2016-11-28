@@ -16,7 +16,7 @@ $msg = '';
 if(isset($_POST['phoneNum']) && isset($_POST['smsMessage']))
 {
 	$phoneNum = $_POST['phoneNum'];
-	$msg = $_POST['smsMessage'].' , from winnie';
+	$msg = $_POST['smsMessage'].' , -from your dormitory.';
 
 	$response = $chikkaAPI->sendText($msgID, $phoneNum, $msg);
 	echo json_encode($response); 

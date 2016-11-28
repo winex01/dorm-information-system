@@ -34,6 +34,26 @@ class Boarder extends Database implements iBoarder {
 		}			
 	}
 
+	public function updateBoarder($id, $fN, $mN, $lN, $telNum = '', $phoneNum, $homeAddress)
+	{
+		try {
+			$sql = 'UPDATE boarder
+					SET	
+					boarder_firstName = ?,
+					boarder_middleName = ?,
+					boarder_lastName = ?,
+					boarder_homeAddress = ?,
+					boarder_telephoneNum = ?,
+					boarder_phoneNum = ? 
+					WHERE boarder_id = ?
+			';	
+			$this->updateRow($sql, [$fN, $mN, $lN, $homeAddress, $telNum, $phoneNum, $id]);	
+			echo 'Student Updated Successfully';
+		} catch (Exception $e) {
+			return new Exception($e->getMessage());
+		}
+	}
+
 	public function showAllBoarders()
 	{
 		try {
@@ -41,6 +61,18 @@ class Boarder extends Database implements iBoarder {
 			return $this->getRows($sql);			
 		} catch (Exception $e) {
 			return new Exception($e->getMessage());
+		}
+	}
+
+	public function getBoarder($id)
+	{
+		try {
+			$sql = 'SELECT * FROM boarder
+					WHERE boarder_id = ?
+			';
+			return $this->getRow($sql, [$id]);			
+		} catch (Exception $e) {
+			return  new Exception($e->getMessage());
 		}
 	}
 

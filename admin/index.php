@@ -493,11 +493,129 @@
     //end delete boarder/student/data
 
 
-      //update data
-    function updateData(id)
+      //fill data
+      var firstName, middleName, lastName, telNumber, phoneNumber, homeAddress;
+      var uID;
+    function flllModal(fN, hA, id, lN, mN, pN, tN)
+    {   
+        // console.log(fN+' '+hA+' '+id+' '+lN+' '+mN+' '+pN+' '+tN);
+        //fill inputs
+        this.uId = id;
+        this.firstName = $('input[id=upFirstName]');
+        this.middleName = $('input[id=upMiddleName]');
+        this.lastName = $('input[id=upLastName]');
+        this.telNumber = $('input[id=upTelNumber]');
+        this.phoneNumber = $('input[id=upPhoneNumber]');
+        this.homeAddress = $('textarea[id=upHomeAddress]');
+        firstName.val(fN);
+        middleName.val(mN);
+        lastName.val(lN);
+        telNumber.val(tN);
+        phoneNumber.val(pN);
+        homeAddress.val(hA);
+    }//end fill data
+    //update save button click
+    $('#updateBoarderBUtton').click(function() {
+        var result = '';
+        if(firstName.val() == ''){
+             firstName.parent().addClass('has-error');
+             firstName.parent().parent().addClass('has-error');
+        }else{
+            result += '1';
+            firstName.parent().removeClass('has-error');
+            firstName.parent().parent().removeClass('has-error');
+        }
+        if(middleName.val() == ''){
+             middleName.parent().addClass('has-error');
+             middleName.parent().parent().addClass('has-error');
+        }else{
+            result += '2';
+            middleName.parent().removeClass('has-error');
+            middleName.parent().parent().removeClass('has-error');
+        }
+        if(lastName.val() == ''){
+             lastName.parent().addClass('has-error');
+             lastName.parent().parent().addClass('has-error');
+        }else{
+            result += '3';
+            lastName.parent().removeClass('has-error');
+            lastName.parent().parent().removeClass('has-error');
+        }
+        if(phoneNumber.val() == ''){
+             phoneNumber.parent().addClass('has-error');
+             phoneNumber.parent().parent().addClass('has-error');
+        }else{
+            result += '4';
+            phoneNumber.parent().removeClass('has-error');
+            phoneNumber.parent().parent().removeClass('has-error');
+        }
+        if(homeAddress.val() == ''){
+             homeAddress.parent().addClass('has-error');
+             homeAddress.parent().parent().addClass('has-error');
+        }else{
+            result += '5';
+            homeAddress.parent().removeClass('has-error');
+            homeAddress.parent().parent().removeClass('has-error');
+        }
+        if(result == '12345'){
+            //send ajax request to update data
+            $.ajax({
+                    url: '../data/updateBoarder.php',
+                    type: 'post',
+                    data: {
+                        id : uId,
+                        fN : firstName.val(),
+                        mN : middleName.val(),
+                        lN : lastName.val(),
+                        tN : telNumber.val(),
+                        pN : phoneNumber.val(),
+                        hA : homeAddress.val()
+                    },
+                    success: function (data) {
+                        // console.log(data);
+                        $('#modal-update-form').modal('hide');
+                        $('#msgModal').modal('show');
+                        $('#msgModal').find('#msgbody').text();
+                        showAllBoarders();
+                    }
+                });
+        }
+    });//end #updateBoarderButton
+    //getBoarder
+    function getBoarder(id)
     {
-        alert('this is update');
-    }//end update data
+        //get the data first then pass to update data function
+        //get data and put in modal ang value
+        $.ajax({
+                url: '../data/getBoarder.php',
+                type: 'post',
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    $('#modal-update-form').modal('show');
+                    $('#modal-update-form').find('.modal-title').text('Update Data');
+                    //short variables
+                    var fN = data.boarder_firstName;
+                    var hA = data.boarder_homeAddress;
+                    var id = data.boarder_id;
+                    var lN = data.boarder_lastName;
+                    var mN = data.boarder_middleName;
+                    var pN = data.boarder_phoneNum;
+                    var tN = data.boarder_telephoneNum;
+                    flllModal(fN, hA, id, lN, mN, pN, tN);
+                },
+                error: function(){
+                    alert('Error: could not get data in the database');
+                }
+            });
+    }
+    //ene getBoarder
+    
+    function test()
+    {
+        alert('Dont run this or you will get fucked up.');
+    }
+    console.log = function(){}
 </script>
 
 </body>
